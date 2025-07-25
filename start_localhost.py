@@ -9,7 +9,7 @@ import os
 from airtrack_web_server import AirtrackWebServer
 
 def main():
-    print("🚀 Starte Airtrack Web Server auf localhost...")
+    print(" Starte Airtrack Web Server auf localhost...")
     print("=" * 50)
     
     try:
@@ -20,7 +20,7 @@ def main():
             debug=True
         )
         
-        print("🌐 Server-Konfiguration:")
+        print(" Server-Konfiguration:")
         print(f"   Host: {server.host}")
         print(f"   Port: {server.port}")
         print(f"   URL: http://{server.host}:{server.port}")
@@ -35,9 +35,9 @@ def main():
         server.run()
         
     except KeyboardInterrupt:
-        print("\n🛑 Server gestoppt durch Benutzer")
+        print("\nServer gestoppt durch Benutzer")
     except Exception as e:
-        print(f"\n❌ Fehler beim Starten des Servers: {e}")
+        print(f"\n Fehler beim Starten des Servers: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":

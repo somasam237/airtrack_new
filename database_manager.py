@@ -435,12 +435,17 @@ def create_database_config_from_env() -> DatabaseConfig:
         except ImportError:
             pass
     
+    # Check if required environment variables are set
+    db_password = os.getenv('DB_PASSWORD')
+    if not db_password:
+        raise ValueError("DB_PASSWORD environment variable is required but not set. Please check your .env file.")
+    
     return DatabaseConfig(
         host=os.getenv('DB_HOST', 'localhost'),
         port=int(os.getenv('DB_PORT', '5432')),
         database=os.getenv('DB_NAME', 'airtrack_db'),
         user=os.getenv('DB_USER', 'postgres'),
-        password=os.getenv('DB_PASSWORD', 'Samsam2002'),
+        password=db_password,
         min_connections=int(os.getenv('DB_MIN_CONN', '1')),
         max_connections=int(os.getenv('DB_MAX_CONN', '10'))
     )

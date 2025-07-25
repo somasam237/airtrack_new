@@ -24,11 +24,11 @@ class AirtrackWebServer:
     Web Server für Airtrack Flight Visualization
     
     Features:
-    🗺️ Interaktive Leaflet-Karte
-    📡 Real-time Flight Updates via WebSocket
-    📊 Live Dashboard mit Statistiken
-    🛫 Aircraft Info Popups
-    📈 Historical Data Visualization
+    Interaktive Leaflet-Karte
+    Real-time Flight Updates via WebSocket
+    Live Dashboard mit Statistiken
+    Aircraft Info Popups
+     Historical Data Visualization
     """
     
     def __init__(self, host='127.0.0.1', port=5000, debug=False):
@@ -57,13 +57,13 @@ class AirtrackWebServer:
         self._setup_routes()
         self._setup_websocket_handlers()
         
-        print("🌐 Airtrack Web Server initialisiert")
+        print(" Airtrack Web Server initialisiert")
         print(f"   Host: {self.host}:{self.port}")
     
     def initialize_airtrack(self):
         """Initialisiert die Airtrack-Komponenten."""
         try:
-            print("🚀 Initialisiere Airtrack-Komponenten...")
+            print(" Initialisiere Airtrack-Komponenten...")
             
             # Database Config
             db_config = create_database_config_from_env()
@@ -74,9 +74,9 @@ class AirtrackWebServer:
                 from aircraft_database import create_sample_aircraft_database
                 sample_file = create_sample_aircraft_database()
                 self.aircraft_db.load_csv_database(sample_file)
-                print("✅ Aircraft Database geladen")
+                print(" Aircraft Database geladen")
             except Exception as e:
-                print(f"⚠️ Aircraft Database Fehler: {e}")
+                print(f" Aircraft Database Fehler: {e}")
             
             # Flight Tracker mit Database
             self.flight_tracker = DatabaseFlightTracker(
@@ -86,10 +86,10 @@ class AirtrackWebServer:
             )
             
             if self.flight_tracker.db_connected:
-                print("✅ Airtrack-Komponenten erfolgreich initialisiert")
+                print(" Airtrack-Komponenten erfolgreich initialisiert")
                 return True
             else:
-                print("❌ Database-Verbindung fehlgeschlagen")
+                print(" Database-Verbindung fehlgeschlagen")
                 return False
                 
         except Exception as e:
@@ -350,7 +350,7 @@ class AirtrackWebServer:
                 # Anzahl berechnen
                 total_count = len(all_flights)
                 
-                print(f"📊 API: {total_count} gespeicherte Flüge aus DB abgerufen")
+                print(f" API: {total_count} gespeicherte Flüge aus DB abgerufen")
                 
                 return jsonify({
                     'success': True,
@@ -518,8 +518,8 @@ class AirtrackWebServer:
         if not self.initialize_airtrack():
             print("❌ Kann Airtrack nicht initialisieren - Server startet trotzdem")
         
-        print(f"🌐 Starte Airtrack Web Server auf http://{self.host}:{self.port}")
-        print("📍 Öffne die URL in deinem Browser für die interaktive Karte!")
+        print(f" Starte Airtrack Web Server auf http://{self.host}:{self.port}")
+        print(" Öffne die URL in deinem Browser für die interaktive Karte!")
         
         self.socketio.run(
             self.app,

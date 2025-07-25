@@ -1,8 +1,6 @@
 -- Airtrack Database Schema für Ubuntu VM
--- PostgreSQL Schema für Live Flight Tracking System
 
--- Database erstellen (falls nötig)
--- CREATE DATABASE airtrack_db;
+
 
 -- Mit Database verbinden
 \c airtrack_db;

@@ -1,18 +1,8 @@
-# 🚀 Airtrack Ubuntu VM Deployment Guide
+#  Airtrack Ubuntu VM Deployment Guide
 
-## 📋 Übersicht
-Dieses Guide erklärt, wie Sie Ihr Airtrack Flight Tracking System auf einer Ubuntu VM deployen.
 
-## 🎯 Warum Ubuntu VM?
 
-### Vorteile:
-- **🔒 Isolation**: Saubere, isolierte Umgebung
-- **🐧 Linux**: Production-ready Server-Umgebung  
-- **📦 Dependencies**: Bessere Package-Verwaltung
-- **🌐 Network**: Einfachere Port-Konfiguration
-- **🚀 Skalierung**: Cloud-deployment ready
-
-## 📁 Dateien in diesem Transfer-Paket:
+##  Dateien in diesem Transfer-Paket:
 
 ```
 airtrack_transfer/
