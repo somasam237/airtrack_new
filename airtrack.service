@@ -1,0 +1,14 @@
+[Unit]
+Description=Airtrack Flight Tracking Service
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/airtrack
+Environment=PATH=/home/ubuntu/airtrack/airtrack_env/bin
+ExecStart=/home/ubuntu/airtrack/airtrack_env/bin/python airtrack_web_server.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

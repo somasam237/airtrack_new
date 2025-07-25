@@ -1,0 +1,5 @@
+icao24,registration,aircraft_type,manufacturer,model,airline,airline_iata,airline_icao,owner,operator,construction_number,first_flight,engines,seats,category
+4b1814,HB-JNA,Airbus A320-214,Airbus,A320-214,Swiss International Air Lines,LX,SWR,,,,,,,Commercial
+3c6444,D-AIQD,Airbus A320-211,Airbus,A320-211,Lufthansa,LH,DLH,,,,,,,Commercial
+a12345,N123AB,Boeing 737-800,Boeing,737-800,American Airlines,AA,AAL,,,,,,,Commercial
+a98765,N987XY,Cessna 172,Cessna,172,,,,Private Owner,,,,,,General Aviation

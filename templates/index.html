@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airtrack - Live Flight Tracking</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/airtrack.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flight-icons.css') }}" />
+    
+    <!-- Socket.IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>✈️ Airtrack - Live Flight Tracking</h1>
+        <div class="status" id="connection-status">Verbindung wird hergestellt...</div>
+    </div>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="connection-status" id="connection-indicator">
+                🔄 Verbindung wird hergestellt...
+            </div>
+            
+            <div class="control-panel">
+                <h3>🎛️ Steuerung</h3>
+                
+                <div class="control-group">
+                    <button id="live-updates-btn" class="btn" onclick="toggleLiveUpdates()">
+                        Live-Updates starten
+                    </button>
+                </div>
+                
+                <div class="control-group">
+                    <button class="btn" onclick="refreshData()">
+                        📡 Daten aktualisieren
+                    </button>
+                </div>
+                
+                <div class="control-group">
+                    <button class="btn btn-info" onclick="loadAllStoredFlights()">
+                        🗄️ Alle gespeicherten Flüge
+                    </button>
+                </div>
+                
+                <div class="control-group">
+                    <button class="btn" onclick="centerMap()">
+                        🎯 Karte zentrieren
+                    </button>
+                </div>
+            </div>
+            
+            <!-- NEUE FILTER-SEKTION -->
+            <div class="filter-panel">
+                <h3>🎯 Flugfilter</h3>
+                
+                <div class="filter-status">
+                    <strong>Aktueller Filter:</strong> 
+                    <span id="filter-status">Alle Flüge</span>
+                    <span id="flight-count" class="flight-count"></span>
+                </div>
+                
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <h4>🛬 Nach Zielland</h4>
+                        <select id="destination-filter" class="filter-select">
+                            <option value="">Zielland wählen...</option>
+                        </select>
+                        
+                        <div class="quick-filters">
+                            <button id="btn-to-germany" class="btn btn-small btn-filter" 
+                                    onclick="filterFlightsByDestination('Germany')">
+                                🇩🇪 Nach Deutschland
+                            </button>
+                            <button id="btn-to-france" class="btn btn-small btn-filter" 
+                                    onclick="filterFlightsByDestination('France')">
+                                🇫🇷 Nach Frankreich
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4>🛫 Nach Herkunftsland</h4>
+                        <select id="origin-filter" class="filter-select">
+                            <option value="">Herkunftsland wählen...</option>
+                        </select>
+                        
+                        <div class="quick-filters">
+                            <button id="btn-from-cameroon" class="btn btn-small btn-filter" 
+                                    onclick="filterCameroonFlights()">
+                                🇨🇲 Kamerun (Statistiken)
+                            </button>
+                            <button id="btn-from-nigeria" class="btn btn-small btn-filter" 
+                                    onclick="filterFlightsByOrigin('Nigeria')">
+                                🇳🇬 Von Nigeria
+                            </button>
+                            <button id="btn-from-egypt" class="btn btn-small btn-filter" 
+                                    onclick="filterFlightsByOrigin('Egypt')">
+                                🇪🇬 Von Ägypten
+                            </button>
+                            <button id="btn-from-morocco" class="btn btn-small btn-filter" 
+                                    onclick="filterFlightsByOrigin('Morocco')">
+                                �� Von Marokko
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- NEUE AFRIKA-FILTER SEKTION -->
+                    <div class="filter-group africa-filters">
+                        <h4>🌍 Afrika-Filter</h4>
+                        <div class="quick-filters africa-quick">
+                            <button class="btn btn-small btn-filter" 
+                                    onclick="filterFlightsByRegion('Africa')">
+                                🌍 Alle Afrika-Flüge
+                            </button>
+                            <button class="btn btn-small btn-filter" 
+                                    onclick="filterFlightsByOrigin('South Africa')">
+                                🇿🇦 Südafrika
+                            </button>
+                            <button class="btn btn-small btn-filter" 
+                                    onclick="filterFlightsByOrigin('Kenya')">
+                                🇰🇪 Kenia
+                            </button>
+                            <button class="btn btn-small btn-filter" 
+                                    onclick="filterFlightsByOrigin('Ethiopia')">
+                                🇪🇹 Äthiopien
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <button id="btn-all-flights" class="btn btn-primary" 
+                                onclick="clearFilter(); loadFlights()">
+                            🌍 Alle Flüge anzeigen
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-panel">
+                <h3>📊 Statistiken</h3>
+                <div id="stats-container">
+                    <div class="loading">Lade Statistiken...</div>
+                </div>
+            </div>
+            
+            <div class="flights-list">
+                <h3>✈️ Aktive Flüge</h3>
+                <div id="flights-container">
+                    <div class="loading">Lade Flugdaten...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </div>
+    
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Airtrack JavaScript -->
+    <script src="{{ url_for('static', filename='js/airtrack.js') }}"></script>
+</body>
+</html>

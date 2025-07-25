@@ -1,0 +1,18 @@
+# SSH Config für Airtrack VM
+# Speichern als: ~/.ssh/config
+
+Host airtrack-vm
+    HostName your-vm-ip-address
+    User your-username
+    Port 22
+    LocalForward 5000 localhost:5000
+    LocalForward 5432 localhost:5432
+    # Kompression für bessere Performance
+    Compression yes
+    # Keep Connection alive
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+# Verwendung:
+# ssh airtrack-vm
+# Dann im Browser: http://localhost:5000
