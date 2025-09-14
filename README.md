@@ -1,6 +1,16 @@
 # Airtrack Project
 
 Ein System zum Tracking von Live-Flugdaten über die OpenSky Network API.
+<img width="1879" height="1013" alt="Capture d'écran 2025-09-14 184010" src="https://github.com/user-attachments/assets/5b43bece-5de7-4d5a-8dd9-77bb68e0271c" />
+
+<img width="1885" height="1023" alt="Capture d'écran 2025-09-14 183657" src="https://github.com/user-attachments/assets/98a8aa87-23f6-482d-a561-6686914a8734" />
+
+<img width="1899" height="1016" alt="Capture d'écran 2025-09-14 184247" src="https://github.com/user-attachments/assets/337060b4-a132-467f-be3e-e8f4b8708222" />
+
+<img width="1910" height="1026" alt="Capture d'écran 2025-09-14 184137" src="https://github.com/user-attachments/assets/21ebb72c-74fa-4a8f-ad5a-e917f2ef4125" />
+
+Projekt Übersicht
+
 
 ##  Projektstruktur
 
